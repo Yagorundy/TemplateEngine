@@ -13,6 +13,18 @@
 *
 */
 
-int main() {
+#include "templateengine.h"
+#include "./shared/validationexception.h"
 
+int main() {
+	try {
+		TemplateEngine::bootstrap();
+	} catch (const TemplateEngine::ValidationException&) {
+		return 1;
+	}
+	// TODO: add catch for std::exception
+	catch (...) {
+		// TODO: maybe output an error msg
+		return 1;
+	}
 }

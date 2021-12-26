@@ -2,5 +2,24 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\parser\variablesparser.cpp" />
+    <ClCompile Include="src\storage\variablesstorage.cpp" />
+    <ClCompile Include="src\parser\valuesparser.cpp" />
+    <ClCompile Include="src\storage\valuesstorage.cpp" />
+    <ClCompile Include="src\templateengine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\parser\variablesparser.h" />
+    <ClInclude Include="src\storage\variablesstorage.h" />
+    <ClInclude Include="src\parser\valuesparser.h" />
+    <ClInclude Include="src\storage\valuesstorage.h" />
+    <ClInclude Include="src\shared\variabletype.h" />
+    <ClInclude Include="src\shared\validationexception.h" />
+    <ClInclude Include="src\templateengine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include=".gitattributes" />
+    <None Include="src\.editorconfig" />
   </ItemGroup>
 </Project>
