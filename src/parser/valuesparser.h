@@ -20,6 +20,9 @@
 #include <string>
 
 #include "../storage/valuesstorage.h"
+#include "../shared/stringhelper.h"
+#include "../shared/validationexception.h"
+#include "../storage/variablesstorage.h"
 
 namespace TemplateEngine {
     class ValuesParser {
@@ -27,8 +30,10 @@ namespace TemplateEngine {
         const std::string _ARR_OPENING_TAG;
         const std::string _ARR_CLOSING_TAG;
 
+        std::vector<std::string> _parseArray(const std::string& line, std::size_t l, std::size_t r);
+
     public:
         ValuesParser(const std::string& separator, const std::string& arrOpeningTag, const std::string& arrClosingTag);
-        ValuesStorage* parse(const std::string& line);
+        ValuesStorage* parse(const std::string& line, const VariablesStorage& variablesStorage);
     };
 }

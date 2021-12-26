@@ -7,6 +7,7 @@
     <ClCompile Include="src\parser\valuesparser.cpp" />
     <ClCompile Include="src\storage\valuesstorage.cpp" />
     <ClCompile Include="src\templateengine.cpp" />
+    <ClCompile Include="src\shared\stringhelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\parser\variablesparser.h" />
@@ -16,6 +17,7 @@
     <ClInclude Include="src\shared\variabletype.h" />
     <ClInclude Include="src\shared\validationexception.h" />
     <ClInclude Include="src\templateengine.h" />
+    <ClInclude Include="src\shared\stringhelper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -25,5 +27,6 @@
   <ItemGroup>
     <Text Include="data\data.txt" />
     <Text Include="data\template.txt" />
+    <Text Include="data\data_spaced.txt" />
   </ItemGroup>
 </Project>

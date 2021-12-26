@@ -18,13 +18,26 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "../shared/variabletype.h"
+#include "../shared/validationexception.h"
 
 namespace TemplateEngine {
     class VariablesStorage {
     public:
-        void addVariable(const std::string& name, const VariableType& type);
+        struct VariableData {
+            std::string name;
+            VariableType type;
+        };
+
+    private:
+        std::vector<VariableData> _variables;
+
+    public:
+        VariablesStorage();
+
+        void addVariable(const VariableData& data);
         void removeVariable(const std::string& name);
 
         VariableType getTypeByName(const std::string& name) const;

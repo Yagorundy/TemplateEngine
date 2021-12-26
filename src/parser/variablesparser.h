@@ -21,11 +21,15 @@
 
 #include "../shared/variabletype.h"
 #include "../storage/variablesstorage.h"
+#include "../shared/stringhelper.h"
 
 namespace TemplateEngine {
     class VariablesParser {
         const std::string _VAR_SEPARATOR;
         const std::string _NAME_TYPE_SEPARATOR;
+
+        VariableType _getVarTypeFromString(const std::string& line, size_t l, size_t r);
+        VariablesStorage::VariableData _parseNameTypeEntry(const std::string& line, size_t l, size_t r);
 
     public:
         VariablesParser(const std::string& varSparator, const std::string& nameTypeSeparator);

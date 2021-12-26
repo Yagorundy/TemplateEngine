@@ -23,10 +23,18 @@
 namespace TemplateEngine {
     class ValuesStorage {
     public:
+        struct ValueData;
+
+    private:
+        std::vector<ValueData> _values;
+
+    public:
         struct ValueData {
             std::string value;
             std::vector<std::string> values;
         };
+
+        ValuesStorage();
 
         void addStringValue(const std::string& value);
         void addArrayValue(const std::vector<std::string> values);

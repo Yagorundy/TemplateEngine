@@ -14,7 +14,6 @@
 */
 
 #include "templateengine.h"
-#include "./shared/validationexception.h"
 
 int main() {
 	try {

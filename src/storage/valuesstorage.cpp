@@ -1,17 +1,23 @@
 #include "valuesstorage.h"
 
-void TemplateEngine::ValuesStorage::addStringValue(const std::string& value) {
-	// TODO
-}
+namespace TemplateEngine {
+	ValuesStorage::ValuesStorage()
+		: _values(std::vector<ValueData>())
+	{ }
 
-void TemplateEngine::ValuesStorage::addArrayValue(std::vector<std::string> values) {
-	// TODO
-}
+	void ValuesStorage::addStringValue(const std::string& value) {
+		this->_values.push_back({ value });
+	}
 
-void TemplateEngine::ValuesStorage::removeValue(const size_t& index) {
-	// TODO
-}
+	void ValuesStorage::addArrayValue(std::vector<std::string> values) {
+		this->_values.push_back({ "", values });
+	}
 
-const TemplateEngine::ValuesStorage::ValueData& TemplateEngine::ValuesStorage::getValue(size_t index) const {
-	// TODO
+	void ValuesStorage::removeValue(const size_t& index) {
+		this->_values.erase(this->_values.begin() + index);
+	}
+
+	const ValuesStorage::ValueData& ValuesStorage::getValue(size_t index) const {
+		return this->_values[index];
+	}
 }

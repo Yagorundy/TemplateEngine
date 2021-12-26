@@ -19,6 +19,13 @@
 
 #pragma once
 
+#include <fstream>
+
+#include "shared/validationexception.h"
+#include "parser/variablesparser.h"
+#include "parser/valuesparser.h"
+#include "shared/stringhelper.h"
+
 namespace TemplateEngine {
 	void bootstrap();
 }
