@@ -22,4 +22,8 @@
     <None Include=".gitattributes" />
     <None Include="src\.editorconfig" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\data.txt" />
+    <Text Include="data\template.txt" />
+  </ItemGroup>
 </Project>

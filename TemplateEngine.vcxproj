@@ -160,6 +160,10 @@
     <None Include=".gitignore" />
     <None Include="src\.editorconfig" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\data.txt" />
+    <Text Include="data\template.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
