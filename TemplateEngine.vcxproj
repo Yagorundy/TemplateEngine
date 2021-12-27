@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\component\component.cpp" />
+    <ClCompile Include="src\component\loopcomponent.cpp" />
+    <ClCompile Include="src\component\nestedcomponent.cpp" />
+    <ClCompile Include="src\component\staticcomponent.cpp" />
+    <ClCompile Include="src\component\variablecomponent.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\parser\templateparser.cpp" />
     <ClCompile Include="src\parser\valuesparser.cpp" />
     <ClCompile Include="src\parser\variablesparser.cpp" />
     <ClCompile Include="src\shared\stringhelper.cpp" />
@@ -148,6 +154,12 @@
     <ClCompile Include="src\templateengine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\component\component.h" />
+    <ClInclude Include="src\component\loopcomponent.h" />
+    <ClInclude Include="src\component\nestedcomponent.h" />
+    <ClInclude Include="src\component\staticcomponent.h" />
+    <ClInclude Include="src\component\variablecomponent.h" />
+    <ClInclude Include="src\parser\templateparser.h" />
     <ClInclude Include="src\parser\valuesparser.h" />
     <ClInclude Include="src\parser\variablesparser.h" />
     <ClInclude Include="src\shared\stringhelper.h" />

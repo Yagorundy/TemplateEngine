@@ -15,6 +15,7 @@
 * 2. Parses and validates the data
 * 3. Parses and validates the template and creates the template components
 * 4. Uses the template components to build and output the reult
+* 
 */
 
 #pragma once
@@ -22,9 +23,10 @@
 #include <fstream>
 
 #include "shared/validationexception.h"
+#include "shared/stringhelper.h"
 #include "parser/variablesparser.h"
 #include "parser/valuesparser.h"
-#include "shared/stringhelper.h"
+#include "parser/templateparser.h"
 
 namespace TemplateEngine {
 	void bootstrap();
