@@ -1,12 +1,15 @@
 #include "templateengine.h"
 
 namespace TemplateEngine {
+    const unsigned int MAX_FILE_PATH_SIZE = 256;
     void bootstrap() {
-        // TODO: remove hardcode
-        const auto databaseFilePath = "./data/data_nested.txt";
-        const auto templateFilePath = "./data/template_nested.txt";
+        char dataFilePath[MAX_FILE_PATH_SIZE], templateFilePath[MAX_FILE_PATH_SIZE];
+        printf("Enter path to template file: ");
+        scanf_s("%s", templateFilePath, MAX_FILE_PATH_SIZE);
+        printf("Enter path to data file: ");
+        scanf_s("%s", dataFilePath, MAX_FILE_PATH_SIZE);
 
-        std::ifstream dataFile(databaseFilePath, std::ifstream::binary);
+        std::ifstream dataFile(dataFilePath, std::ifstream::binary);
         if (!dataFile.is_open())
             throw ValidationException();
 
@@ -41,12 +44,7 @@ namespace TemplateEngine {
             out.close();
         }
 
-        for (const auto& valuesStorage : valuesStorages) {
-            printf(rootComponent->generate(*variablesStorage, *valuesStorage).c_str());
-            printf("\n\n");
-        }
-
         for (const auto& valuesStorage : valuesStorages)
-            delete valuesStorage;
+            delete valuesStorage;        
     }
 }

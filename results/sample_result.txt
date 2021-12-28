@@ -1,0 +1,5 @@
+Hello teodor,
+you have 2 new messages:
+	- "Hey Atanas"
+	- "Hello Georgi"
+	- "I am waiting Dimitar"

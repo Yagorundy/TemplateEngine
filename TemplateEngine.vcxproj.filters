@@ -42,5 +42,6 @@
     <Text Include="data\data_spaced.txt" />
     <Text Include="data\template_nested.txt" />
     <Text Include="data\data_nested.txt" />
+    <Text Include="results\sample_result.txt" />
   </ItemGroup>
 </Project>

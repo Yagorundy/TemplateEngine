@@ -18,12 +18,9 @@
 int main() {
 	try {
 		TemplateEngine::bootstrap();
-	} catch (const TemplateEngine::ValidationException&) {
-		return 1;
 	}
-	// TODO: add catch for std::exception
+	// ugly catch but it must be this way because of project requirements
 	catch (...) {
-		// TODO: maybe output an error msg
 		return 1;
 	}
 }

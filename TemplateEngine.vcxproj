@@ -180,6 +180,7 @@
     <Text Include="data\data_spaced.txt" />
     <Text Include="data\template.txt" />
     <Text Include="data\template_nested.txt" />
+    <Text Include="results\sample_result.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

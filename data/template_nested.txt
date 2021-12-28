@@ -2,7 +2,7 @@ Hello {{ username }},
 you have {{ unread_messages }} new messages:
 {% for message in messages %}
 	- "{{ message }}"
-	::{% for num in numbers %} {{ num }} {% endfor %}
+	::{% for num in numbers %} {{ num }}{% endfor %}
 {% endfor %}
 
 Hello {{ username }},
