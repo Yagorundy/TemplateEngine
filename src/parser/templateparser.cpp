@@ -11,9 +11,16 @@ namespace TemplateEngine {
 		_LOOP_DEFINITION_KEYWORD(loopDefinitionKeyword), _LOOP_LOOKUP_KEYWORD(loopLookupKeyword), _LOOP_END_KEYWORD(loopEndKeyword)
 	{ }
 
-	void TemplateParser::trimFrontUntilNewLineOrContent(const std::string& buffer, size_t& l) {
-		while (std::isspace(buffer[l]) && buffer[l] != '\n') l++;
-		if (buffer[l] == '\n') l++;
+	void TemplateParser::trimFrontUntilNewLineOrContent(const std::string& buffer, size_t& l, const size_t& r) {
+		size_t i = l;
+		while (i < r && buffer[i] != '\n') i++;
+		if (buffer[i] == '\n') l = i + 1;
+	}
+
+	void TemplateParser::trimBackUntilNewLineOrContent(const std::string& buffer, size_t& r) {
+		size_t i = r;
+		while (i > 1 && buffer[i - 1] != '\n') i--;
+		if (buffer[i - 1] == '\n') r = i;
 	}
 
 	const StaticComponent* TemplateParser::_extractStaticComponent(const std::string& buffer, size_t l, const size_t& r) {
@@ -101,9 +108,15 @@ namespace TemplateEngine {
 		std::vector<NestedComponent*> components;
 		components.push_back(new NestedComponent());
 
+		// -1 none, 0 variable, 1 loop opening, 2 loop closing
+		char lastDefinition = -1;
+		// -1 none, 0  false, 1 true
+		char lastLoopStaticContentHasNewLine = -1;
+		// we don't alway add the static content before a loop tag
+		std::string loopStaticContent;
 		bool inVariable = false,
 			inLoopStatement = false,
-			isLoopTrimmed = false;
+			isLoopTrimmed = true;
 		while (!file.eof()) {
 			// add read content to the buffer
 			char* readBuffer = new char[this->_BUFFER_LEN];
@@ -121,7 +134,7 @@ namespace TemplateEngine {
 
 					// Trim first new line of first static content in loop
 					if (!isLoopTrimmed) {
-						this->trimFrontUntilNewLineOrContent(buffer, l);
+						this->trimFrontUntilNewLineOrContent(buffer, l, r);
 						isLoopTrimmed = true;
 					}
 
@@ -136,6 +149,7 @@ namespace TemplateEngine {
 
 					components.back()->addComponent(*this->_extractVariableComponent(buffer, l, r));
 					l = r + this->_VAR_CLOSING_TAG.size();
+					lastDefinition = 0;
 				}
 				else if (strEquals(this->_LOOP_OPENING_TAG, buffer, r)) {
 					// No loop inside variable and no double opening loop tag
@@ -143,7 +157,7 @@ namespace TemplateEngine {
 						throw ValidationException();
 					inLoopStatement = true;
 
-					components.back()->addComponent(*this->_extractStaticComponent(buffer, l, r));
+					loopStaticContent = substring(buffer, l, r);
 					l = r + this->_LOOP_OPENING_TAG.size();
 				}
 				else if (strEquals(this->_LOOP_CLOSING_TAG, buffer, r)) {
@@ -157,11 +171,28 @@ namespace TemplateEngine {
 					const auto isLoopEnd = strEquals(this->_LOOP_END_KEYWORD, buffer, i);
 
 					if (isLoopEnd) {
+						if (lastDefinition == 2 && lastLoopStaticContentHasNewLine) {
+							// . . .
+						} else {
+							size_t loopStaticContentR = loopStaticContent.size();
+							this->trimBackUntilNewLineOrContent(loopStaticContent, loopStaticContentR);
+							components.back()->addComponent(*this->_extractStaticComponent(loopStaticContent, 0, loopStaticContentR));
+						}
+
 						const auto loopComponent = components.back();
 						components.pop_back();
 						components.back()->addComponent(*loopComponent);
+						lastDefinition = 2;
+						lastLoopStaticContentHasNewLine = loopStaticContent.find('\n') != -1;
 					} else {
+						if (lastDefinition == 1 && isEmpty(loopStaticContent)) {
+							// . . . don't add the empty space between 2 consecutive loop definitions
+						} else {
+							components.back()->addComponent(*this->_extractStaticComponent(loopStaticContent, 0, loopStaticContent.size()));
+						}
+
 						components.push_back(this->_extractLoopComponent(buffer, i, j));
+						lastDefinition = 1;
 						isLoopTrimmed = false;
 					}
 
@@ -173,8 +204,10 @@ namespace TemplateEngine {
 			}
 
 			// preserve only unprocessed template content 
-			if (l < buffer.size() && l != 0)
-				buffer = substring(buffer, l, buffer.size());
+			if (l < buffer.size()) {
+				if (l != 0)
+					buffer = substring(buffer, l, buffer.size());
+			}
 			// if no unprocessed template content reset the buffer
 			else
 				buffer = "";

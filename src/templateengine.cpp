@@ -3,8 +3,8 @@
 namespace TemplateEngine {
     void bootstrap() {
         // TODO: remove hardcode
-        const auto databaseFilePath = "./data/data_spaced.txt";
-        const auto templateFilePath = "./data/template.txt";
+        const auto databaseFilePath = "./data/data_nested.txt";
+        const auto templateFilePath = "./data/template_nested.txt";
 
         std::ifstream dataFile(databaseFilePath, std::ifstream::binary);
         if (!dataFile.is_open())

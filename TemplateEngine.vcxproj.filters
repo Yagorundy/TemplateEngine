@@ -40,5 +40,7 @@
     <Text Include="data\data.txt" />
     <Text Include="data\template.txt" />
     <Text Include="data\data_spaced.txt" />
+    <Text Include="data\template_nested.txt" />
+    <Text Include="data\data_nested.txt" />
   </ItemGroup>
 </Project>

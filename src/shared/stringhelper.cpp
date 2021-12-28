@@ -2,7 +2,7 @@
 
 namespace TemplateEngine {
 	void trim(const std::string& str, size_t& l, size_t& r) {
-		while (std::isspace(str[r - 1]) && r > l) r--;
+		while (r > l && std::isspace(str[r - 1])) r--;
 		while (std::isspace(str[l]) && r > l) l++;
 	}
 
