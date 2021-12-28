@@ -40,7 +40,9 @@ namespace TemplateEngine {
 		const std::string _LOOP_LOOKUP_KEYWORD;
 		const std::string _LOOP_END_KEYWORD;
 
-		const StaticComponent* _extractStaticComponent(const std::string& buffer, const size_t& l, const size_t& r);
+		void trimFrontUntilNewLineOrContent(const std::string& buffer, size_t& l);
+		
+		const StaticComponent* _extractStaticComponent(const std::string& buffer, size_t l, const size_t& r);
 		const VariableComponent* _extractVariableComponent(const std::string& buffer, size_t l, size_t r);
 		LoopComponent* _extractLoopComponent(const std::string& buffer, size_t l, size_t r);
 

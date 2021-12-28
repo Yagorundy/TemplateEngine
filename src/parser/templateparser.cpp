@@ -11,8 +11,29 @@ namespace TemplateEngine {
 		_LOOP_DEFINITION_KEYWORD(loopDefinitionKeyword), _LOOP_LOOKUP_KEYWORD(loopLookupKeyword), _LOOP_END_KEYWORD(loopEndKeyword)
 	{ }
 
-	const StaticComponent* TemplateParser::_extractStaticComponent(const std::string& buffer, const size_t& l, const size_t& r) {
-		return new const StaticComponent(substring(buffer, l, r));
+	void TemplateParser::trimFrontUntilNewLineOrContent(const std::string& buffer, size_t& l) {
+		while (std::isspace(buffer[l]) && buffer[l] != '\n') l++;
+		if (buffer[l] == '\n') l++;
+	}
+
+	const StaticComponent* TemplateParser::_extractStaticComponent(const std::string& buffer, size_t l, const size_t& r) {
+		// Replace \r\n with \n and \r with \n
+		std::string result;
+		for (size_t i = l; i <= r; i++) {
+			if (i == r) {
+				result += substring(buffer, l, i);
+			} else if (buffer[i] == '\r') {
+				result += substring(buffer, l, i);
+				l = i + 1;
+
+				// if not CRLF and only CR add new line
+				bool isCrlfCombination = (i + 1) < r && buffer[i + 1] == '\n';
+				if (!isCrlfCombination)
+					result += '\n';
+			}
+		}
+
+		return new const StaticComponent(result);
 	}
 
 	const VariableComponent* TemplateParser::_extractVariableComponent(const std::string& buffer, size_t l, size_t r) {
@@ -80,9 +101,9 @@ namespace TemplateEngine {
 		std::vector<NestedComponent*> components;
 		components.push_back(new NestedComponent());
 
-		// TODO: fix bug - multiple new lines
-
-		bool inVariable = false, inLoopStatement = false;
+		bool inVariable = false,
+			inLoopStatement = false,
+			isLoopTrimmed = false;
 		while (!file.eof()) {
 			// add read content to the buffer
 			char* readBuffer = new char[this->_BUFFER_LEN];
@@ -97,6 +118,12 @@ namespace TemplateEngine {
 					if (inVariable)
 						throw ValidationException();
 					inVariable = true;
+
+					// Trim first new line of first static content in loop
+					if (!isLoopTrimmed) {
+						this->trimFrontUntilNewLineOrContent(buffer, l);
+						isLoopTrimmed = true;
+					}
 
 					components.back()->addComponent(*this->_extractStaticComponent(buffer, l, r));
 					l = r + this->_VAR_OPENING_TAG.size();
@@ -135,6 +162,7 @@ namespace TemplateEngine {
 						components.back()->addComponent(*loopComponent);
 					} else {
 						components.push_back(this->_extractLoopComponent(buffer, i, j));
+						isLoopTrimmed = false;
 					}
 
 					l = r + this->_LOOP_CLOSING_TAG.size();
