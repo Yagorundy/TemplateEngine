@@ -2,7 +2,7 @@
 FMI Introduction to Programming (practicum) - solution to course project #4 (Template engine)
 
 
-This is a simple template engine. You input the paths to the template file and the data file and then the engine generates documents based on the template using the data provided. Check out the project criterias [here](Template%20engine.docx) to get familiar with the concept.
+This is a simple template engine. You input the paths to the template file and the data file and then the engine generates documents based on the template using the data provided. Check out the project criterias [here](Template%20engine.pdf) to get familiar with the concept.
 
 This engine:
 - can replace variables with values
