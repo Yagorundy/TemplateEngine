@@ -175,8 +175,10 @@ namespace TemplateEngine {
 							// . . .
 						} else {
 							size_t loopStaticContentR = loopStaticContent.size();
-							this->trimBackUntilNewLineOrContent(loopStaticContent, loopStaticContentR);
-							components.back()->addComponent(*this->_extractStaticComponent(loopStaticContent, 0, loopStaticContentR));
+							if (loopStaticContentR) {
+								this->trimBackUntilNewLineOrContent(loopStaticContent, loopStaticContentR);
+								components.back()->addComponent(*this->_extractStaticComponent(loopStaticContent, 0, loopStaticContentR));
+							}
 						}
 
 						const auto loopComponent = components.back();
