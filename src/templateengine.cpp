@@ -28,6 +28,7 @@ namespace TemplateEngine {
                 valuesStorages.push_back(valuesParser.parse(line, *variablesStorage));
             }
         }
+        dataFile.close();
 
         TemplateParser templateParser("{{", "}}", "{%", "%}", "for", "in", "endfor");
         std::unique_ptr<const NestedComponent> rootComponent(templateParser.parse(templateFilePath));
